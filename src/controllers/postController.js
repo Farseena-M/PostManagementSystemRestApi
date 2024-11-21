@@ -56,7 +56,7 @@ export const updatePost = async (req, res) => {
         const { id } = req.params;
         const { title, description } = req.body;
         const images = req.file
-        const updatedPost = await Post.findByIdAndUpdate(
+        const updatedPost = await postSchema.findByIdAndUpdate(
             id,
             { title, description, ...(images && { images }) },
             { new: true }
@@ -72,7 +72,7 @@ export const updatePost = async (req, res) => {
 export const deletePost = async (req, res) => {
     try {
         const { id } = req.params;
-        await Post.findByIdAndDelete(id);
+        await postSchema.findByIdAndDelete(id);
         res.json({ message: 'Post deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: 'An error occurred while deleting the post.' });
