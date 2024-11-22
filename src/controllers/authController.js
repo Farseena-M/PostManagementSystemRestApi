@@ -16,11 +16,13 @@ export const Signup = async (req, res) => {
             email,
             password,
         })
+        
         await newUser.save()
         return res.status(201).json({
             status: 'Success',
             data: newUser
-        })
+        })        
+        
     } catch (error) {
         return res.status(500).json({
             status: "failure",

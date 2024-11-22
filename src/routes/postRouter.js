@@ -1,12 +1,13 @@
 import express from 'express';
 import { createPosts, deletePost, getAllPosts, getPostById, updatePost } from '../controllers/postController.js';
 import multipleImage from '../middlewares/multipleImage.js';
+import verifyToken from '../middlewares/verifyToken.js';
 const postRouter = express.Router()
 
-postRouter.post('/create',multipleImage,createPosts)
-postRouter.get('/all-posts',getAllPosts)
-postRouter.get('/fetch/:id',getPostById)
-postRouter.patch('/:id',multipleImage,updatePost)
-postRouter.delete('/:id',deletePost)
+postRouter.post('/create', multipleImage, verifyToken, createPosts)
+postRouter.get('/all-posts', verifyToken, getAllPosts)
+postRouter.get('/fetch/:id', verifyToken, getPostById)
+postRouter.patch('/:id', verifyToken, multipleImage, updatePost)
+postRouter.delete('/:id', verifyToken, deletePost)
 
 export default postRouter;
