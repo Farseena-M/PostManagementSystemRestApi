@@ -7,11 +7,8 @@ const app = express()
 
 app.use(bodyParser.json());
 app.use(express.json())
-app.use(cors({
-    origin: 'post-management-system-web.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
-}));
+app.use(cors({ origin: '*', credentials: true }));
+
 app.use('/posts', postRouter, authRouter)
 
 export default app;
