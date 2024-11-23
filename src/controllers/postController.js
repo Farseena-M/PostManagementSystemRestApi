@@ -52,44 +52,26 @@ export const getPostById = async (req, res) => {
 
 
 export const updatePost = async (req, res) => {
-    const postId = req.params.id;
-    const { title, description, images } = req.body;
-
-    let post = await postSchema.findById(postId);
-    if (!post) {
-        return res.status(404).json({
-            status: 'Fail',
-            message: 'Post not found',
-        });
-    }
-
-    const updateData = {
-        title,
-        description,
-    };
-
-    if (images && Array.isArray(images) && images.length > 0) {
-        if (Array.isArray(post.images)) {
-            for (let imageUrl of post.images) {
-                const publicId = imageUrl.split('/').pop().split('.')[0];
-                await cloudinary.uploader.destroy(publicId);
-            }
-        }
-        post.images = images;
-    }
-
     try {
-        const updatedPost = await postSchema.findByIdAndUpdate(postId, updateData, {
-            new: true,
-            runValidators: true,
-        });
+        const { id } = req.params;
+        const { title, description, images } = req.body;
 
-        res.status(200).json({ message: "Post updated successfully", updatedPost });
+        const updatedPost = await postSchema.findByIdAndUpdate(
+            id,
+            { title, description, images },
+            { new: true }
+        );
+
+        if (!updatedPost) {
+            return res.status(404).json({ error: 'Post not found.' });
+        }
+
+        res.status(200).json(updatedPost);
     } catch (error) {
-        res.status(500).json({ error: error.message });
-        console.log("Error in updatePost: ", error.message);
+        res.status(500).json({ error: 'An error occurred while updating the post.' });
     }
 };
+
 
 
 
