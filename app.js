@@ -8,9 +8,9 @@ const app = express()
 app.use(bodyParser.json());
 app.use(express.json())
 const corsOptions = {
-    origin: 'https://post-management-system-web.vercel.app',
+    origin: '*',
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
