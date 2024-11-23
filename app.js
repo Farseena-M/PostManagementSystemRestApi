@@ -7,7 +7,11 @@ const app= express()
 
 app.use(bodyParser.json());
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: 'https://post-management-system-web-cxsr.vercel.app/',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 
 app.use('/posts',postRouter,authRouter)
 
